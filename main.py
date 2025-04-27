@@ -102,15 +102,20 @@ def plot_income_comparison(years, cumulative_office, cumulative_freelance, param
     plt.plot(years, cumulative_freelance, label="Freelance Engineer (Net)")
 
     plt.xlabel("Age")
-    plt.ylabel("Cumulative Net Income (100 million JPY)")
+    plt.ylabel("Cumulative Net Income (JPY)")
     plt.title("Lifetime Cumulative Net Income Comparison")
     plt.legend()
     plt.grid(True)
-    plt.tight_layout()
 
-    # Format y-axis to display values in units of 100 million JPY (億円)
+    # Format y-axis to show full numbers, disable scientific notation and offset
     ax = plt.gca()
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: f"{x/1e8:.1f}"))
+    formatter = ticker.ScalarFormatter(useOffset=False)
+    formatter.set_scientific(False)
+    ax.yaxis.set_major_formatter(formatter)
+
+    # Adjust layout to prevent labels from being cut off
+    plt.subplots_adjust(left=0.15) # Increase left margin
+    plt.tight_layout() # Apply tight layout *after* adjusting margins
 
     # TODO: Add final total amounts and difference to the plot or title
 
